@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block title %}Restaurant Inventory - Edit Item{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">Edit Inventory Item</h5>
+    </div>
+    <div class="card-body">
+        <form method="post" action="{{ url_for('inventory.edit_item', item_id=item.id) }}">
+            <div class="mb-3">
+                <label for="name" class="form-label">Item Name</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{ item.name }}" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="category_id" class="form-label">Category</label>
+                <select class="form-select" id="category_id" name="category_id" required>
+                    {% for category in categories %}
+                    <option value="{{ category.id }}" {% if category.id == item.category_id %}selected{% endif %}>{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="row">
+                <div class="col-6 mb-3">
+                    <label for="quantity" class="form-label">Current Quantity</label>
+                    <input type="number" class="form-control" id="quantity" name="quantity" value="{{ item.quantity }}" min="0" required>
+                </div>
+                
+                <div class="col-6 mb-3">
+                    <label for="unit" class="form-label">Unit</label>
+                    <input type="text" class="form-control" id="unit" name="unit" value="{{ item.unit }}" required>
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <label for="threshold" class="form-label">Low Stock Threshold</label>
+                <input type="number" class="form-control" id="threshold" name="threshold" value="{{ item.threshold }}" min="1" required>
+                <div class="form-text">Alert will be triggered when quantity falls below this value</div>
+            </div>
+            
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-save me-2"></i> Save Changes
+                </button>
+                <a href="{{ url_for('inventory.items') }}" class="btn btn-outline-secondary">
+                    <i class="bi bi-x-circle me-2"></i> Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

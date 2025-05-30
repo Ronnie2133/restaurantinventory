@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block title %}Restaurant Inventory - Notification Results{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">Notification Results</h5>
+    </div>
+    <div class="card-body">
+        <div class="alert alert-success">
+            <h6 class="alert-heading">Notifications Sent!</h6>
+            <p>The inventory notification has been sent to the selected managers.</p>
+        </div>
+        
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Manager</th>
+                        <th>Status</th>
+                        <th>Message</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for result in results %}
+                    <tr>
+                        <td>{{ result.manager }}</td>
+                        <td>
+                            {% if result.success %}
+                            <span class="badge badge-ok">Success</span>
+                            {% else %}
+                            <span class="badge badge-out">Failed</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ result.message }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="d-grid gap-2 mt-4">
+            <a href="{{ url_for('inventory.index') }}" class="btn btn-primary">
+                <i class="bi bi-house-door me-2"></i> Return to Home
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
