@@ -1,50 +1,64 @@
 {% extends "layout.html" %}
 
-{% block title %}Restaurant Inventory - Home{% endblock %}
-
 {% block content %}
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Restaurant Inventory</h5>
-            </div>
-            <div class="card-body">
-                <p class="lead">Welcome to your restaurant inventory management system.</p>
-                <p>Use this app to track your inventory and notify managers when items need to be restocked.</p>
-                
-                <div class="d-grid gap-2 mt-4">
-                    <a href="{{ url_for('inventory.check') }}" class="btn btn-primary">
-                        <i class="bi bi-clipboard-check me-2"></i> Check Inventory
-                    </a>
-                    <a href="{{ url_for('inventory.items') }}" class="btn btn-outline-primary">
-                        <i class="bi bi-box-seam me-2"></i> Manage Items
-                    </a>
-                    <a href="{{ url_for('inventory.categories') }}" class="btn btn-outline-primary">
-                        <i class="bi bi-tags me-2"></i> Manage Categories
-                    </a>
-                    <a href="{{ url_for('inventory.managers') }}" class="btn btn-outline-primary">
-                        <i class="bi bi-people me-2"></i> Manage Notification Recipients
-                    </a>
-                </div>
-            </div>
+<div class="container">
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Restaurant Inventory</h5>
         </div>
-    </div>
-</div>
-
-<div class="row mt-4">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">Categories</h5>
+        <div class="card-body">
+            <div class="alert alert-info">
+                Welcome to the restaurant inventory management system. Select an option below to get started.
             </div>
-            <div class="list-group list-group-flush">
-                {% for category in categories %}
-                <a href="{{ url_for('inventory.items', category_id=category.id) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                    {{ category.name }}
-                    <i class="bi bi-chevron-right"></i>
-                </a>
-                {% endfor %}
+            
+            <div class="row mt-4">
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Inventory Check</h5>
+                            <p class="card-text">Perform an inventory check to identify items that need to be restocked.</p>
+                            <a href="{{ url_for('inventory.check') }}" class="btn btn-primary">
+                                <i class="fas fa-clipboard-check"></i> Start Inventory Check
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">View Submissions</h5>
+                            <p class="card-text">View history of inventory checks and items that need attention.</p>
+                            <a href="{{ url_for('inventory.submissions') }}" class="btn btn-info">
+                                <i class="fas fa-history"></i> View Submission History
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Manage Inventory</h5>
+                            <p class="card-text">View and edit inventory items and categories.</p>
+                            <a href="{{ url_for('inventory.items') }}" class="btn btn-success">
+                                <i class="fas fa-boxes"></i> Manage Items
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Manage Categories</h5>
+                            <p class="card-text">Add, edit, or remove inventory categories.</p>
+                            <a href="{{ url_for('inventory.categories') }}" class="btn btn-secondary">
+                                <i class="fas fa-tags"></i> Manage Categories
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
