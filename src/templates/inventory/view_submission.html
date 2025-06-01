@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">View Submission Details</h5>
+        </div>
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4>Inventory Check #{{ check.id }}</h4>
+                <span class="text-muted">{{ check.timestamp.strftime('%Y-%m-%d %H:%M') }}</span>
+            </div>
+            
+            {% if check.notes %}
+                <div class="alert alert-info">
+                    <strong>Notes:</strong> {{ check.notes }}
+                </div>
+            {% endif %}
+            
+            {% if checked_items %}
+                <h5 class="mt-4 mb-3">Items Requiring Attention</h5>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Purchase Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for checked_item in checked_items %}
+                                <tr>
+                                    <td>{{ checked_item.item.name }}</td>
+                                    <td>{{ checked_item.item.category.name }}</td>
+                                    <td>
+                                        {% if checked_item.status == 'low' %}
+                                            <span class="badge bg-warning text-dark">Low Stock</span>
+                                        {% elif checked_item.status == 'out' %}
+                                            <span class="badge bg-danger">Out of Stock</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if checked_item.purchase_amount %}
+                                            {{ checked_item.purchase_amount }} {{ checked_item.item.unit }}
+                                        {% else %}
+                                            <span class="text-muted">Not specified</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="alert alert-success">
+                    All items are in stock. No items require attention.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="d-flex justify-content-between mb-4">
+        <a href="{{ url_for('inventory.submissions') }}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Back to Submissions
+        </a>
+        <a href="{{ url_for('inventory.check') }}" class="btn btn-primary">
+            <i class="fas fa-clipboard-check"></i> New Inventory Check
+        </a>
+    </div>
+</div>
+{% endblock %}
